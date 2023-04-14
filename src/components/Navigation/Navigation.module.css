@@ -1,0 +1,15 @@
+.navigation {
+  grid-area: n;
+  background-color: blueviolet;
+}
+.item {
+  color: rgb(116, 226, 180);
+}
+
+.item.active {
+  color: goldenrod;
+}
+
+.item:hover {
+  color: rgb(255, 0, 0);
+}

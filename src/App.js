@@ -1,5 +1,3 @@
-import backgroundProfile from "./assets/img/background.jpg";
-
 import "./index.css";
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";

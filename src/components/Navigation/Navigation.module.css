@@ -1,12 +1,17 @@
 .navigation {
   grid-area: n;
   background-color: blueviolet;
+  padding: 20px;
 }
 .item {
-  color: rgb(116, 226, 180);
+  color: rgb(32, 143, 97);
 }
 
-.item.active {
+.item a {
+  text-decoration: none;
+}
+
+.item a.active {
   color: goldenrod;
 }
 

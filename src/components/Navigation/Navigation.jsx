@@ -1,22 +1,38 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.css";
+import { useCallback } from "react";
+
 const Navigation = () => {
+  const selectedLink = useCallback(
+    (select) => (select.isActive ? styles.active : styles.item),
+    []
+  );
   return (
     <nav className={styles.navigation}>
-      <div className={`{styles.item} {styles.active}`}>
-        <Link to="/profile">Profile</Link>
+      <div className={`${styles.item} `}>
+        <NavLink to="/profile" className={selectedLink}>
+          Profile
+        </NavLink>
       </div>
-      <div className={`{styles.item} {styles.active}`}>
-        <Link to="/messages">Messages</Link>
+      <div className={`${styles.item} `}>
+        <NavLink to="/messages" className={selectedLink}>
+          Messages
+        </NavLink>
       </div>
-      <div className={styles.item}>
-        <Link to="/news">News</Link>
+      <div className={`${styles.item} `}>
+        <NavLink to="/news" className={selectedLink}>
+          News
+        </NavLink>
       </div>
-      <div className={styles.item}>
-        <Link to="/music">Music</Link>
+      <div className={`${styles.item} `}>
+        <NavLink to="/music" className={selectedLink}>
+          Music
+        </NavLink>
       </div>
-      <div className={`{styles.item} {styles.active}`}>
-        <Link to="/settings">Settings</Link>
+      <div className={`${styles.item} `}>
+        <NavLink to="/settings" className={selectedLink}>
+          Settings
+        </NavLink>
       </div>
     </nav>
   );

@@ -1,0 +1,57 @@
+{
+  "state": {
+    "dialogs": {
+      "UsersData": [
+        {
+          "id": 1,
+          "name": "Anton 1"
+        },
+        {
+          "id": 2,
+          "name": "Anton 2"
+        },
+        {
+          "id": 3,
+          "name": "Anton 3"
+        },
+        {
+          "id": 4,
+          "name": "Anton 4"
+        },
+        {
+          "id": 5,
+          "name": "Anton 5555"
+        }
+      ],
+
+      "UserMassageData": [
+        {
+          "id": 1,
+          "massage": "biba boba"
+        },
+        {
+          "id": 2,
+          "massage": "nigga boba"
+        },
+        {
+          "id": 3,
+          "massage": "giga boba"
+        }
+      ]
+    },
+    "profile": {
+      "PostsData": [
+        {
+          "id": 1,
+          "likeCounts": 33,
+          "message": "dasdasda dsadasdad"
+        },
+        {
+          "id": 2,
+          "likeCounts": 133,
+          "message": "Hey Buba"
+        }
+      ]
+    }
+  }
+}

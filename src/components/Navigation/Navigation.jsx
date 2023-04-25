@@ -34,6 +34,11 @@ const Navigation = () => {
           Settings
         </NavLink>
       </div>
+      <div className={`${styles.item} `}>
+        <NavLink to="/friends" className={selectedLink}>
+          Friends
+        </NavLink>
+      </div>
     </nav>
   );
 };

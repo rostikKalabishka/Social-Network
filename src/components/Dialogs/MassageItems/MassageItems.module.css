@@ -1,0 +1,12 @@
+.massageItem {
+  margin-left: 300px;
+}
+
+.massageItem span {
+  margin: 25px;
+  display: inline-block;
+  border-radius: 20%;
+  padding: 5px;
+  background-color: blue;
+  color: white;
+}

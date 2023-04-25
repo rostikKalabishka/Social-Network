@@ -1,39 +1,22 @@
-import { NavLink } from "react-router-dom";
 import styles from "./Dialogs.module.css";
-import { useCallback } from "react";
 
-const Dialogs = ({}) => {
-  const selectedLink = useCallback(
-    (select) => (select.isActive ? styles.active : styles.item),
-    []
-  );
+import DialogItem from "./DialogItem/DialogItem";
+import MassageItem from "./MassageItems/MassageItems";
+
+const Dialogs = ({ UsersData, UserMassageData }) => {
+  const usersItem = UsersData.map((item) => {
+    return <DialogItem id={item.id} name={item.name} />;
+  });
+  const UserMassagesItem = UserMassageData.map((item) => {
+    return (
+      <MassageItem id={item.id} massage={item.massage} unread={item.unread} />
+    );
+  });
+
   return (
     <div className={styles.dialogs}>
-      <div className={styles.dialogsItems}>
-        <div className={styles.dialog}>
-          <NavLink to="/messages/1">Anton</NavLink>
-        </div>
-        <div className={styles.dialog}>
-          <NavLink to="/messages/2" className={selectedLink}>
-            Anton2
-          </NavLink>
-        </div>
-        <div className={styles.dialog}>
-          <NavLink to="/messages/3" className={selectedLink}>
-            Anton3
-          </NavLink>
-        </div>
-        <div className={styles.dialog}>
-          <NavLink to="/messages/4" className={selectedLink}>
-            Anton4
-          </NavLink>
-        </div>
-      </div>
-      <div className={styles.massages}>
-        <div className={styles.massageItem}>1</div>
-        <div className={styles.massageItem}>2</div>
-        <div className={styles.massageItem}>3 </div>
-      </div>
+      <div className={styles.dialogsItems}>{usersItem}</div>
+      <div className={styles.massages}>{UserMassagesItem}</div>
     </div>
   );
 };

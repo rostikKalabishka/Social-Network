@@ -9,24 +9,33 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
 
-const App = ({ state }) => {
+const App = ({ state, addPost }) => {
   return (
     <div className="app-wrapper">
       <Header />
-      <Navigation />
+      <Navigation friends={state.sidebar.friends} />
 
       <div className="app-wrapper-content">
         <Routes>
           <Route
-            path="/profile"
+            path="/"
             element={<Profile PostsData={state.profilePage.PostsData} />}
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                PostsData={state.profilePage.PostsData}
+                addPost={addPost}
+              />
+            }
           />
           <Route
             path="/messages"
             element={
               <Dialogs
-                UsersData={state.massagePage.UsersData}
-                UserMassageData={state.massagePage.UserMassageData}
+                UsersData={state.messagePage.UsersData}
+                UserMessageData={state.messagePage.UserMessageData}
               />
             }
           />

@@ -2,11 +2,20 @@ import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.css";
 import { useCallback } from "react";
 
-const Navigation = () => {
+const Navigation = ({ friends }) => {
   const selectedLink = useCallback(
     (select) => (select.isActive ? styles.active : styles.item),
     []
   );
+
+  const friendsUser = friends.map(({ name, online }) => {
+    return (
+      <div>
+        {name} {online}
+      </div>
+    );
+  });
+
   return (
     <nav className={styles.navigation}>
       <div className={`${styles.item} `}>
@@ -39,6 +48,7 @@ const Navigation = () => {
           Friends
         </NavLink>
       </div>
+      <div>{friendsUser}</div>
     </nav>
   );
 };

@@ -1,3 +1,5 @@
+import online from "../assets/img/online.jpg";
+import { rerender } from "../render";
 export const state = {
   profilePage: {
     PostsData: [
@@ -13,7 +15,7 @@ export const state = {
       },
     ],
   },
-  massagePage: {
+  messagePage: {
     UsersData: [
       {
         id: 1,
@@ -37,23 +39,51 @@ export const state = {
       },
     ],
 
-    UserMassageData: [
+    UserMessageData: [
       {
         id: 1,
-        massage: "biba boba",
+        message: "biba boba",
         unread: 1,
       },
       {
         id: 2,
-        massage: "nigga boba",
+        message: "nigga boba",
         unread: 33,
       },
       {
         id: 3,
-        massage: "giga boba",
+        message: "giga boba",
         unread: 31231,
       },
     ],
   },
-  sidebar: {},
+  sidebar: {
+    friends: [
+      {
+        id: 1,
+        name: "Raf",
+        online: 1,
+      },
+      {
+        id: 2,
+        name: "Vaf",
+        online: 1,
+      },
+      {
+        id: 3,
+        name: "Ihor",
+        online: 1,
+      },
+    ],
+  },
+};
+
+export let addPost = (postMessage) => {
+  let newPost = {
+    id: 15,
+    message: postMessage,
+    likeCounts: 0,
+  };
+  state.profilePage.PostsData.push(newPost);
+  rerender(state);
 };

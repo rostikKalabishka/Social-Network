@@ -1,8 +1,8 @@
-.massageItem {
+.messageItem {
   margin-left: 300px;
 }
 
-.massageItem span {
+.messageItem span {
   margin: 25px;
   display: inline-block;
   border-radius: 20%;

@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Posts/Post";
 import { Button } from "@mui/material";
-const MyPosts = ({ PostsData, addPost }) => {
-  const newPostElement = React.createRef();
+import {
+  AddPostActionCreator,
+  onPostChangeActionCreator,
+} from "../../../redux/state";
+
+// const AddPostActionCreator = () => {
+//   return { type: "ADD-POST" };
+// };
+// const onPostChangeActionCreator = (textChange) => {
+//   return { type: "UPDATE-NEW-POST-TEXT", text: textChange };
+// };
+const MyPosts = ({ PostsData, newPostText, dispatch }) => {
+  const [newPost, setNewPost] = useState(newPostText);
 
   const postItem = PostsData.map((item) => {
     return (
@@ -11,17 +22,24 @@ const MyPosts = ({ PostsData, addPost }) => {
     );
   });
   const addPosts = () => {
-    let text = newPostElement.current.value;
-
-    addPost(text);
+    const active = AddPostActionCreator();
+    dispatch(active);
+    // changeNewPostText(" ");
     // console.log(text);
+  };
+  const onPostChange = (e) => {
+    let text = e.target.value;
+    setNewPost(e.target.value);
+    const active = onPostChangeActionCreator(text);
+    dispatch(active);
+    console.log(newPost);
   };
 
   return (
     <div className={styles.content}>
       <h3>Post</h3>
       <div>
-        <textarea ref={newPostElement}></textarea>
+        <textarea onChange={(e) => onPostChange(e)} value={newPostText} />
       </div>
       <div>
         <Button variant="contained" disableElevation onClick={addPosts}>

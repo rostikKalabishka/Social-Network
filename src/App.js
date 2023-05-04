@@ -9,24 +9,25 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
 
-const App = ({ state, addPost }) => {
+const App = ({ state, dispatch }) => {
   return (
     <div className="app-wrapper">
       <Header />
       <Navigation friends={state.sidebar.friends} />
-
+      {/* } */}
       <div className="app-wrapper-content">
         <Routes>
-          <Route
+          {/* <Route
             path="/"
             element={<Profile PostsData={state.profilePage.PostsData} />}
-          />
+          /> */}
           <Route
             path="/profile"
             element={
               <Profile
+                newPostText={state.profilePage.newPostText}
                 PostsData={state.profilePage.PostsData}
-                addPost={addPost}
+                dispatch={dispatch}
               />
             }
           />
@@ -48,5 +49,5 @@ const App = ({ state, addPost }) => {
     </div>
   );
 };
-
+// rerender(state);
 export default App;

@@ -3,9 +3,14 @@ import styles from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItems/MessageItems";
 import { Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import {
+  AddMessageActionCreator,
+  onMessageChangeActionCreator,
+} from "../../redux/messagePageReducer";
 
-const Dialogs = ({ UsersData, UserMessageData }) => {
+const Dialogs = ({ messageText, UsersData, UserMessageData, dispatch }) => {
+  const [newMessage, setNewMessage] = useState(messageText);
   const usersItem = UsersData.map((item) => {
     return <DialogItem id={item.id} name={item.name} />;
   });
@@ -14,24 +19,38 @@ const Dialogs = ({ UsersData, UserMessageData }) => {
       <MessageItem id={item.id} message={item.message} unread={item.unread} />
     );
   });
-  const newMessageElement = React.createRef();
 
   const addMessage = () => {
-    const text = newMessageElement.current.value;
-    alert(text);
+    const active = AddMessageActionCreator();
+    dispatch(active);
+  };
+  const onChangeMessage = (e) => {
+    let text = e.target.value;
+    setNewMessage(text);
+    const active = onMessageChangeActionCreator(text);
+    dispatch(active);
+    console.log(newMessage);
   };
 
   return (
     <div className={styles.dialogs}>
       <div className={styles.dialogsItems}>{usersItem}</div>
-      <div className={styles.messages}>{UserMessagesItem}</div>
-      <div>
-        <textarea ref={newMessageElement}></textarea>
+      <div className={styles.messages}>
+        <div>{UserMessagesItem}</div>
       </div>
       <div>
-        <Button onClick={addMessage} variant="contained" disableElevation>
-          Add Message
-        </Button>
+        <div>
+          <textarea
+            placeholder="Enter your message"
+            onChange={(e) => onChangeMessage(e)}
+            value={messageText}
+          ></textarea>
+        </div>
+        <div>
+          <Button onClick={addMessage} variant="contained" disableElevation>
+            Add Message
+          </Button>
+        </div>
       </div>
     </div>
   );

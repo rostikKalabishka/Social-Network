@@ -37,6 +37,8 @@ const App = ({ state, dispatch }) => {
               <Dialogs
                 UsersData={state.messagePage.UsersData}
                 UserMessageData={state.messagePage.UserMessageData}
+                messageText={state.messagePage.messageText}
+                dispatch={dispatch}
               />
             }
           />

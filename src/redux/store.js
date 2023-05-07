@@ -1,6 +1,8 @@
+import messagePageReducer from "./messagePageReducer";
+import profilePageReducer from "./profilePageReducer";
+import sidebarReducer from "./sidebarReducer";
+
 // import online from "../assets/img/online.jpg";
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 let store = {
   _state: {
@@ -60,6 +62,7 @@ let store = {
           unread: 31231,
         },
       ],
+      messageText: "Hi",
     },
     sidebar: {
       friends: [
@@ -93,28 +96,20 @@ let store = {
   },
 
   dispatch(action) {
-    if (action.type === ADD_POST) {
-      let newPost = {
-        id: 15,
-        message: this._state.profilePage.newPostText,
-        likeCounts: 0,
-      };
-      this._state.profilePage.PostsData.push(newPost);
-      this._state.profilePage.newPostText = "";
-      this._callSubscriber(this._state);
-    } else if (action.type === UPDATE_NEW_POST_TEXT) {
-      this._state.profilePage.newPostText = action.text;
+    this._state.profilePage = profilePageReducer(
+      this._state.profilePage,
+      action
+    );
 
-      this._callSubscriber(this._state);
-    }
+    this._state.messagePage = messagePageReducer(
+      this._state.messagePage,
+      action
+    );
+
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+
+    this._callSubscriber(this._state);
   },
-};
-
-export const AddPostActionCreator = () => {
-  return { type: ADD_POST };
-};
-export const onPostChangeActionCreator = (textChange) => {
-  return { type: UPDATE_NEW_POST_TEXT, text: textChange };
 };
 
 export default store;

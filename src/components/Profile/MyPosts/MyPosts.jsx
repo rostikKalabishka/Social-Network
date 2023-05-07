@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import {
   AddPostActionCreator,
   onPostChangeActionCreator,
-} from "../../../redux/state";
+} from "../../../redux/profilePageReducer";
 
 // const AddPostActionCreator = () => {
 //   return { type: "ADD-POST" };
@@ -29,10 +29,10 @@ const MyPosts = ({ PostsData, newPostText, dispatch }) => {
   };
   const onPostChange = (e) => {
     let text = e.target.value;
-    setNewPost(e.target.value);
+    setNewPost(text);
     const active = onPostChangeActionCreator(text);
     dispatch(active);
-    console.log(newPost);
+    // console.log(newPost);
   };
 
   return (
@@ -50,5 +50,5 @@ const MyPosts = ({ PostsData, newPostText, dispatch }) => {
     </div>
   );
 };
-
+//34,35 передивисись
 export default MyPosts;

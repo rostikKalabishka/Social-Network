@@ -3,13 +3,15 @@ import ReactDOM from "react-dom/client";
 import React from "react";
 import store from "./redux/reduxStore";
 import App from "./App";
-
-export let rerender = (state) => {
+import { Provider } from "react-redux";
+export let rerender = () => {
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(
     <BrowserRouter>
       <React.StrictMode>
-        <App state={state} dispatch={store.dispatch.bind(store)} />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </React.StrictMode>
     </BrowserRouter>
   );

@@ -2,47 +2,35 @@ import React, { useState } from "react";
 import styles from "./MyPosts.module.css";
 import Post from "./Posts/Post";
 import { Button } from "@mui/material";
-import {
-  AddPostActionCreator,
-  onPostChangeActionCreator,
-} from "../../../redux/profilePageReducer";
 
-// const AddPostActionCreator = () => {
-//   return { type: "ADD-POST" };
-// };
-// const onPostChangeActionCreator = (textChange) => {
-//   return { type: "UPDATE-NEW-POST-TEXT", text: textChange };
-// };
-const MyPosts = ({ PostsData, newPostText, dispatch }) => {
-  const [newPost, setNewPost] = useState(newPostText);
+const MyPosts = ({ addPost, updateNewPostText, profilePage }) => {
+  const [newPost, setNewPost] = useState(profilePage.newPostText);
 
-  const postItem = PostsData.map((item) => {
+  const postItem = profilePage.PostsData.map((item) => {
     return (
       <Post id={item.id} likeCounts={item.likeCounts} message={item.message} />
     );
   });
-  const addPosts = () => {
-    const active = AddPostActionCreator();
-    dispatch(active);
-    // changeNewPostText(" ");
-    // console.log(text);
+  const onAddPost = () => {
+    addPost();
   };
   const onPostChange = (e) => {
     let text = e.target.value;
     setNewPost(text);
-    const active = onPostChangeActionCreator(text);
-    dispatch(active);
-    // console.log(newPost);
+    updateNewPostText(text);
   };
 
   return (
     <div className={styles.content}>
       <h3>Post</h3>
       <div>
-        <textarea onChange={(e) => onPostChange(e)} value={newPostText} />
+        <textarea
+          onChange={(e) => onPostChange(e)}
+          value={profilePage.newPostText}
+        />
       </div>
       <div>
-        <Button variant="contained" disableElevation onClick={addPosts}>
+        <Button variant="contained" disableElevation onClick={onAddPost}>
           Add post
         </Button>
       </div>

@@ -8,13 +8,13 @@ const Navigation = ({ friends }) => {
     []
   );
 
-  const friendsUser = friends.map(({ name, online }) => {
-    return (
-      <div>
-        {name} {online}
-      </div>
-    );
-  });
+  // const friendsUser = friends.map(({ name, online }) => {
+  //   return (
+  //     <div>
+  //       {name} {online}
+  //     </div>
+  //   );
+  // });
 
   return (
     <nav className={styles.navigation}>
@@ -48,7 +48,7 @@ const Navigation = ({ friends }) => {
           Friends
         </NavLink>
       </div>
-      <div>{friendsUser}</div>
+      {/* <div>{friendsUser}</div> */}
     </nav>
   );
 };

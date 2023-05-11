@@ -18,6 +18,7 @@ let initialState = {
 };
 const profilePageReducer = (state = initialState, action) => {
   // eslint-disable-next-line default-case
+
   switch (action.type) {
     case ADD_POST:
       let newPost = {
@@ -25,12 +26,15 @@ const profilePageReducer = (state = initialState, action) => {
         message: state.newPostText,
         likeCounts: 0,
       };
-      state.PostsData.push(newPost);
-      state.newPostText = "";
-      return state;
+      return {
+        ...state,
+        newPostText: "",
+        PostsData: [...state.PostsData, newPost],
+      };
+
     case UPDATE_NEW_POST_TEXT:
-      state.newPostText = action.text;
-      return state;
+      return { ...state, newPostText: action.text };
+
     default:
       return state;
   }

@@ -8,11 +8,16 @@ import React, { useState } from "react";
 const Dialogs = ({ addMessage, onChangeMessage, messagePage }) => {
   const [newMessage, setNewMessage] = useState(messagePage.messageText);
   const usersItem = messagePage.UsersData.map((item) => {
-    return <DialogItem id={item.id} name={item.name} />;
+    return <DialogItem id={item.id} key={item.id} name={item.name} />;
   });
-  const UserMessagesItem = messagePage.UserMessageData.map((item) => {
+  const UserMessagesItem = messagePage.UserMessageData.map((item, index) => {
     return (
-      <MessageItem id={item.id} message={item.message} unread={item.unread} />
+      <MessageItem
+        id={item.id}
+        message={item.message}
+        key={item.id}
+        unread={item.unread}
+      />
     );
   });
 

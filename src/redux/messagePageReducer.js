@@ -47,19 +47,24 @@ let initialState = {
 
 const messagePageReducer = (state = initialState, action) => {
   // eslint-disable-next-line default-case
+
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
-      state.messageText = action.text;
-      return state;
+      return { ...state, messageText: action.text };
+    // stateCopy.messageText = action.text;
+
     case SEND_MESSAGE:
       let newMessage = {
         id: 222,
         message: state.messageText,
         unread: 5,
       };
-      state.UserMessageData.push(newMessage);
-      state.messageText = "";
-      return state;
+      return {
+        ...state,
+        messageText: "",
+        UserMessageData: [...state.UserMessageData, newMessage],
+      };
+
     default:
       return state;
   }

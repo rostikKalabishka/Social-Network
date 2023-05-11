@@ -8,7 +8,12 @@ const MyPosts = ({ addPost, updateNewPostText, profilePage }) => {
 
   const postItem = profilePage.PostsData.map((item) => {
     return (
-      <Post id={item.id} likeCounts={item.likeCounts} message={item.message} />
+      <Post
+        id={item.id}
+        key={item.id}
+        likeCounts={item.likeCounts}
+        message={item.message}
+      />
     );
   });
   const onAddPost = () => {

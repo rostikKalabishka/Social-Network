@@ -39,15 +39,16 @@ const Navigation = ({ friends }) => {
         </NavLink>
       </div>
       <div className={`${styles.item} `}>
+        <NavLink to="/find_user" className={selectedLink}>
+          Find User
+        </NavLink>
+      </div>
+      <div className={`${styles.item} `}>
         <NavLink to="/settings" className={selectedLink}>
           Settings
         </NavLink>
       </div>
-      <div className={`${styles.item} `}>
-        <NavLink to="/friends" className={selectedLink}>
-          Friends
-        </NavLink>
-      </div>
+
       {/* <div>{friendsUser}</div> */}
     </nav>
   );

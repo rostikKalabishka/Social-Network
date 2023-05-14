@@ -1,46 +1,70 @@
 import { Button } from "@mui/material";
-
 import styles from "./Friends.module.css";
-const FindUsers = ({ unFollowing, following, users, setUsers }) => {
-  // console(unFollowing);
-  if (users.length === 0) {
-    setUsers([
-      {
-        id: 1,
-        followed: true,
-        avatarUrl: "https://otkritkis.com/wp-content/uploads/2022/06/ra8je.jpg",
-        name: "Vasya",
-        status: "ті хто?",
-        location: { country: "Ukraine", city: "Mukachevo" },
-      },
-      {
-        id: 2,
-        followed: false,
-        avatarUrl: "https://otkritkis.com/wp-content/uploads/2022/06/ra8je.jpg",
-        name: "Nadya",
-        status: "Vafelniy",
-        location: { country: "Ukraine", city: "Uzhgorod" },
-      },
-    ]);
+import photosDefault from "../../assets/img/photos.jpg";
+import React from "react";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
+// import { useEffect } from "react";
+
+const FindUsers = ({
+  users,
+  unFollowing,
+  following,
+  totalUsersCount,
+  pageSize,
+  currentPage,
+  clickNumber,
+  preloader,
+  setUsers,
+  setTotalUsersCount,
+}) => {
+  const pagesCount = Math.ceil(totalUsersCount / pageSize);
+  let pages = [];
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i);
   }
 
-  console.log(users);
   return (
     <div className={styles.container}>
       <div className={styles.item}>
         <h2>Users</h2>
+
         {users.map((item) => (
           <div key={item.id}>
             <span>
               <div>
-                <img src={item.avatarUrl} />
+                <NavLink to={`/profile/${item.id}`}>
+                  <img
+                    alt="small photos"
+                    src={
+                      item.photos.small != null
+                        ? item.photos.small
+                        : photosDefault
+                    }
+                  />
+                </NavLink>
               </div>
             </span>
             <div>
               {item.followed ? (
                 <Button
                   onClick={() => {
-                    unFollowing(item.id);
+                    axios
+                      .delete(
+                        `https://social-network.samuraijs.com/api/1.0/follow/${item.id}`,
+
+                        {
+                          withCredentials: true,
+                          headers: {
+                            "API-KEY": "17bd7917-297f-4330-b11b-b3c3833885a4",
+                          },
+                        }
+                      )
+                      .then((response) => {
+                        if (response.data.resultCode === 0) {
+                          unFollowing(item.id);
+                        }
+                      });
                   }}
                   variant="contained"
                   disableElevation
@@ -50,7 +74,22 @@ const FindUsers = ({ unFollowing, following, users, setUsers }) => {
               ) : (
                 <Button
                   onClick={() => {
-                    following(item.id);
+                    axios
+                      .post(
+                        `https://social-network.samuraijs.com/api/1.0/follow/${item.id}`,
+                        {},
+                        {
+                          withCredentials: true,
+                          headers: {
+                            "API-KEY": "17bd7917-297f-4330-b11b-b3c3833885a4",
+                          },
+                        }
+                      )
+                      .then((response) => {
+                        if (response.data.resultCode === 0) {
+                          following(item.id);
+                        }
+                      });
                   }}
                   variant="contained"
                   disableElevation
@@ -65,52 +104,27 @@ const FindUsers = ({ unFollowing, following, users, setUsers }) => {
                 <div>{item.status}</div>
               </span>
               <span>
-                <div>{item.location.city}</div>
-                <div>{item.location.country}</div>
+                <div>{"item.location.city"}</div>
+                <div>{"item.location.country"}</div>
               </span>
             </span>
-            {item.name}
           </div>
         ))}
+        <div className={styles.pagination}>
+          {pages.map((item) => {
+            return (
+              <span
+                onClick={(e) => clickNumber(item)}
+                className={currentPage === item && styles.selectedPage}
+              >
+                {item}
+              </span>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 };
+
 export default FindUsers;
-
-// import { Button } from "@mui/material";
-
-// const FindUsers = ({ unFollowing, following, users, setUsers }) => {
-//   console.log(users);
-//   return (
-//     <div>
-//       <h2>Users</h2>
-//       <div>
-//         {users.map((item) => (
-//           <div key={item.id}>
-//             <span>
-//               <div>
-//                 {/* <img className={styles.avatarImg} src={avatar} /> */}
-//               </div>
-//             </span>
-//             <div>
-//               <Button>Follow</Button>
-//             </div>
-//             <span>
-//               <span>
-//                 <div>{item.name}</div>
-//                 <div>{item.status}</div>
-//               </span>
-//               <span>
-//                 <div>{item.location.city}</div>
-//                 <div>{item.location.country}</div>
-//               </span>
-//             </span>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FindUsers;

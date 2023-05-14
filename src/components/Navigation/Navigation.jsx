@@ -19,7 +19,7 @@ const Navigation = ({ friends }) => {
   return (
     <nav className={styles.navigation}>
       <div className={`${styles.item} `}>
-        <NavLink to="/profile" className={selectedLink}>
+        <NavLink to="/profile/" className={selectedLink}>
           Profile
         </NavLink>
       </div>

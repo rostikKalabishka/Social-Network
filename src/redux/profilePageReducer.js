@@ -1,5 +1,6 @@
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SET_PROFILES = "SET-PROFILES";
 
 let initialState = {
   PostsData: [
@@ -15,6 +16,7 @@ let initialState = {
     },
   ],
   newPostText: "Hi react slave",
+  profile: null,
 };
 const profilePageReducer = (state = initialState, action) => {
   // eslint-disable-next-line default-case
@@ -35,6 +37,8 @@ const profilePageReducer = (state = initialState, action) => {
     case UPDATE_NEW_POST_TEXT:
       return { ...state, newPostText: action.text };
 
+    case SET_PROFILES:
+      return { ...state, profile: action.profile };
     default:
       return state;
   }
@@ -44,6 +48,9 @@ export const AddPostActionCreator = () => {
 };
 export const onPostChangeActionCreator = (textChange) => {
   return { type: UPDATE_NEW_POST_TEXT, text: textChange };
+};
+export const setProfileActionCreator = (profile) => {
+  return { type: SET_PROFILES, profile };
 };
 
 export default profilePageReducer;

@@ -8,3 +8,22 @@
   display: grid;
   grid-template-columns: 2fr 10fr;
 }
+
+.selectedPage {
+  font-weight: bold;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 40px;
+}
+
+.imgPreloader {
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

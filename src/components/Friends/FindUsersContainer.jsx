@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
 import {
   followActionCreator,
+  getFollowThunkCreator,
+  getUnFollowThunkCreator,
+  getUsersThunkCreator,
   setCurrentPageActionCreator,
+  setFollowFetchingActionCreator,
   setPreloaderActionCreator,
   setTotalCountActionCreator,
   setUsersActionCreator,
   unFollowActionCreator,
 } from "../../redux/findUsersPageReducer";
 import { connect } from "react-redux";
-import axios from "axios";
+
 import FindUsers from "./FindUsers";
 
 import Preloader from "../Preloader/Preloader";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+import { getUsers } from "../../api/api";
 export const FindUsersAPIComponent = ({
   users,
   following,
@@ -25,45 +30,38 @@ export const FindUsersAPIComponent = ({
   setCurrentPage,
   isFetching,
   preloader,
+  followFetchingBtn,
+  followFetching,
+  getUsersThunkCreator,
+  getUnFollowThunkCreator,
+  getFollowThunkCreator,
+  isAuth,
 }) => {
-  const router = {
-    location: useLocation(),
-    navigation: useNavigate(),
-    params: useParams(),
-  };
   useEffect(() => {
-    const profileId = router.params.userId || 2;
-    preloader(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`,
-        { withCredentials: true }
-      )
-      .then((response) => {
-        preloader(false);
-        setUsers(response.data.items);
-        setTotalUsersCount(response.data.totalCount);
-      });
+    // preloader(true);
+
+    // getUsers(currentPage, pageSize).then((data) => {
+    //   preloader(false);
+    //   setUsers(data.items);
+    //   setTotalUsersCount(data.totalCount);
+    // });
+    getUsersThunkCreator(false, currentPage, pageSize);
     // axios
     //   .get(`https://social-network.samuraijs.com/api/1.0/follow/${profileId}`)
     //   .then((response) => {
     //     following(response.users.followed);
     //     unFollowing(response.users.followed);
     //   });
-  }, [currentPage, pageSize, preloader, setTotalUsersCount, setUsers]);
+  }, []);
 
   const clickNumber = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    preloader(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`,
-        { withCredentials: true }
-      )
-      .then((response) => {
-        preloader(false);
-        setUsers(response.data.items);
-      });
+    getUsersThunkCreator(pageNumber, currentPage, pageSize);
+    // setCurrentPage(pageNumber);
+    // preloader(true);
+    // getUsers(pageNumber, pageSize).then((data) => {
+    //   preloader(false);
+    //   setUsers(data.items);
+    // });
   };
   return (
     <>
@@ -77,6 +75,11 @@ export const FindUsersAPIComponent = ({
         pageSize={pageSize}
         clickNumber={clickNumber}
         isFetching={isFetching}
+        followFetchingBtn={followFetchingBtn}
+        followFetching={followFetching}
+        getUnFollowThunkCreator={getUnFollowThunkCreator}
+        getFollowThunkCreator={getFollowThunkCreator}
+        isAuth={isAuth}
       />
     </>
   );
@@ -89,6 +92,8 @@ const mapStateToProps = (state) => {
     pageSize: state.findUserPage.pageSize,
     currentPage: state.findUserPage.currentPage,
     isFetching: state.findUserPage.isFetching,
+    followFetching: state.findUserPage.followFetching,
+    isAuth: state.authorize.isAuth,
   };
 };
 
@@ -97,9 +102,11 @@ const mapStateToProps = (state) => {
 const FindUsersContainer = connect(mapStateToProps, {
   following: followActionCreator,
   unFollowing: unFollowActionCreator,
-  setUsers: setUsersActionCreator,
-  setCurrentPage: setCurrentPageActionCreator,
   setTotalUsersCount: setTotalCountActionCreator,
-  preloader: setPreloaderActionCreator,
+  followFetchingBtn: setFollowFetchingActionCreator,
+  getUsersThunkCreator: getUsersThunkCreator,
+  // clickNumberThunkCreator: clickNumberThunkCreator,
+  getUnFollowThunkCreator: getUnFollowThunkCreator,
+  getFollowThunkCreator: getFollowThunkCreator,
 })(FindUsersAPIComponent);
 export default FindUsersContainer;

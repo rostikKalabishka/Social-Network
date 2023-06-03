@@ -16,8 +16,7 @@ const InfoUser = ({ profile }) => {
         <img
           src={profile.photos.large ? profile.photos.large : avatar}
           alt="photos"
-        />{" "}
-        +direction
+        />
       </div>
       <div>{profile.fullName}</div>
       <div>

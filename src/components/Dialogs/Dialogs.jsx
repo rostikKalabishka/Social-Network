@@ -4,8 +4,10 @@ import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItems/MessageItems";
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+import LoginContainer from "../Login/LoginContainer";
+import { Navigate, redirect } from "react-router-dom";
 
-const Dialogs = ({ addMessage, onChangeMessage, messagePage }) => {
+const Dialogs = ({ addMessage, onChangeMessage, messagePage, isAuth }) => {
   const [newMessage, setNewMessage] = useState(messagePage.messageText);
   const usersItem = messagePage.UsersData.map((item) => {
     return <DialogItem id={item.id} key={item.id} name={item.name} />;
@@ -31,6 +33,9 @@ const Dialogs = ({ addMessage, onChangeMessage, messagePage }) => {
     console.log(newMessage);
   };
 
+  if (!isAuth) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div className={styles.dialogs}>
       <div className={styles.dialogsItems}>{usersItem}</div>

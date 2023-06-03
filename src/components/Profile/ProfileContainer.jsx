@@ -2,40 +2,19 @@ import { connect } from "react-redux";
 import Profile from "./Profile";
 import React, { useEffect } from "react";
 import axios from "axios";
-import { setProfileActionCreator } from "../../redux/profilePageReducer";
+import {
+  getProfileUserThunkCreator,
+  setProfileActionCreator,
+} from "../../redux/profilePageReducer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-// import withRouter from "./withRouter";
-// // this.profileId = this.props.router.params.profileId;
-// class ProfileAPIContainer extends React.Component {
-//   componentDidMount() {
-//     this.profileId = this.props.router.params.id;
-//     console.log(this.profileId);
-//     axios
-//       .get(
-//         `https://social-network.samuraijs.com/api/1.0/profile/${this.profileId}`
-//       )
-//       .then((response) => {
-//         this.props.setProfile(response.data);
-//       });
-//   }
+import { getProfileUser } from "../../api/api";
 
-//   render() {
-//     return <Profile {...this.props} profile={this.props.profile} />;
-//   }
-// }
-// const mapStateToProps = (state) => {
-//   return {
-//     profile: state.profilePage.profile,
-//   };
-// };
-
-// const ProfileContainer = connect(mapStateToProps, {
-//   setProfile: setProfileActionCreator,
-// })(withRouter(ProfileAPIContainer));
-
-// export default ProfileContainer;
-
-const ProfileAPIContainer = ({ profile, setProfile }) => {
+const ProfileAPIContainer = ({
+  profile,
+  setProfile,
+  getProfileUserThunkCreator,
+  isAuth,
+}) => {
   const router = {
     location: useLocation(),
     navigation: useNavigate(),
@@ -44,24 +23,30 @@ const ProfileAPIContainer = ({ profile, setProfile }) => {
   useEffect(() => {
     const profileId = router.params.userId || 2;
 
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`)
-      .then((response) => {
-        setProfile(response.data);
-      });
-  });
+    // axios.get(
+    //   `https://social-network.samuraijs.com/api/1.0/profile/${profileId}`
+    // );
+    // getProfileUser(profileId).then((response) => {
+    //   setProfile(response.data);
+    // });
+    getProfileUserThunkCreator(profileId);
+  }, []);
 
-  return <Profile {...profile} profile={profile} route={router} />;
+  return (
+    <Profile {...profile} profile={profile} route={router} isAuth={isAuth} />
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     profile: state.profilePage.profile,
+    isAuth: state.authorize.isAuth,
   };
 };
 
 const ProfileContainer = connect(mapStateToProps, {
   setProfile: setProfileActionCreator,
+  getProfileUserThunkCreator: getProfileUserThunkCreator,
 })(ProfileAPIContainer);
 
 export default ProfileContainer;

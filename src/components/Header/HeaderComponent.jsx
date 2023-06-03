@@ -1,22 +1,21 @@
 import { useEffect } from "react";
 import Header from "./Header";
 import { connect } from "react-redux";
-import { setUserDataActionCreator } from "../../redux/authReducer";
-import axios from "axios";
+import {
+  getAuthMeThunkCreator,
+  setUserDataActionCreator,
+} from "../../redux/authReducer";
 
-const HeaderComponent = ({ setUserData, isAuth, login }) => {
+const HeaderComponent = ({ isAuth, login, getAuthMeThunkCreator }) => {
   useEffect(() => {
-    axios
-      .get("https://social-network.samuraijs.com/api/1.0/auth/me", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.resultCode === 0) {
-          const { id, email, login } = response.data.data;
-          setUserData(id, email, login);
-        }
-      });
-  });
+    getAuthMeThunkCreator();
+    // getAuthMe().then((data) => {
+    //   if (data.resultCode === 0) {
+    //     const { id, email, login } = data.data;
+    //     setUserData(id, email, login);
+    //   }
+    // });
+  }, []);
 
   return (
     <>
@@ -33,6 +32,6 @@ const mapStateToProps = (state) => {
   };
 };
 const HeaderConnect = connect(mapStateToProps, {
-  setUserData: setUserDataActionCreator,
+  getAuthMeThunkCreator: getAuthMeThunkCreator,
 })(HeaderComponent);
 export default HeaderConnect;

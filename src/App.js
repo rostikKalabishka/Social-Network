@@ -11,6 +11,8 @@ import FindUsersContainer from "./components/Friends/FindUsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderComponent from "./components/Header/HeaderComponent";
 
+import LoginContainer from "./components/Login/LoginContainer";
+
 const App = () => {
   return (
     <div className="app-wrapper">
@@ -25,6 +27,7 @@ const App = () => {
           <Route path="/music" element={<Music />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/find_user" element={<FindUsersContainer />} />
+          <Route path="/login" element={<LoginContainer />} />
         </Routes>
       </div>
     </div>
